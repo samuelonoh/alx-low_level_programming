@@ -1,75 +1,51 @@
 #include "dog.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
- * _strdup - returns a pointer to a newly allocated space in memory
- * @str: string
- * Return: pointer to newly allocated space in memory
- */
-
-char *_strdup(char *str)
-{
-	int length, i;
-	char *arr;
-
-	if (str == NULL)
-	{
-		return (NULL);
-	}
-
-	length = 0;
-	while (*(str + length) != '\0')
-	{
-		length++;
-	}
-
-	arr = (char*) malloc(length * sizeof(char) + 1);
-	if (arr == NULL)
-		return (NULL);
-
-	for (i = 0; i < length; i++)
-	{
-		arr[i] = str[i];
-	}
-	arr[i] = '\0';
-
-	return (arr);
-}
-
-/**
- * new_dog - creates a new dog
- * @name: doggo's name
- * @age: doggo's age
- * @owner: doggo's owner
- * Return: new_dog (dog_t)
+ * new_dog - new dog
+ * @name: name's dog
+ * @age: age's dog
+ * @owner: owner's dog
+ * Return: newdog
  */
 
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *doggo;
-	char *doggo_name, *doggo_owner;
 
-	doggo = malloc(sizeof(dog_t));
-	if (doggo == NULL)
-		return (NULL);
+	int i = 0, j = 0, k;
+	dog_t *doge;
 
-	doggo_name = _strdup(name);
-	if (doggo_name == NULL)
+	while (name[i] != '\0')
+		i++;
+	while (owner[j] != '\0')
+		j++;
+	doge = malloc(sizeof(dog_t));
+	if (doge == NULL)
 	{
-		free(doggo);
+		free(doge);
 		return (NULL);
 	}
-
-	doggo_owner = _strdup(owner);
-	if (doggo_owner == NULL)
+	doge->name = malloc(i * sizeof(doge->name));
+	if (doge->name == NULL)
 	{
-		free(doggo_name);
-		free(doggo);
+		free(doge->name);
+		free(doge);
 		return (NULL);
 	}
-	doggo->name = doggo_name;
-	doggo->age = age;
-	doggo->owner = doggo_owner;
-	return (doggo);
+	for (k = 0; k <= i; k++)
+		doge->name[k] = name[k];
+	doge->age = age;
+	doge->owner = malloc(j * sizeof(doge->owner));
+	if (doge->owner == NULL)
+	{
+		free(doge->owner);
+		free(doge->name);
+		free(doge);
+		return (NULL);
+	}
+	for (k = 0; k <= j; k++)
+		doge->owner[k] = owner[k];
+	return (doge);
 }
+
